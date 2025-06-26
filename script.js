@@ -1,4 +1,4 @@
-    <script>
+
         document.addEventListener('DOMContentLoaded', function() {
             // DOM elements
             const chatDisplay = document.getElementById('chat-display');
@@ -226,4 +226,4 @@
                 displayMessage('ai', "I'm here to help you improve your speaking skills. Tell me about your language learning goals or ask me a question!");
             }, 5000);
         });
-    </script>
+  
