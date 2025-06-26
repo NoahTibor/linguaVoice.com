@@ -1,0 +1,392 @@
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+        
+        header {
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .tutor-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .tutor-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .tutor-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="%234e54c8" opacity="0.1"/><circle cx="100" cy="100" r="80" fill="none" stroke="%234e54c8" stroke-width="2" opacity="0.2"/></svg>');
+            background-size: cover;
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        
+        .tutor-avatar {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .tutor-face {
+            position: relative;
+            width: 180px;
+            height: 220px;
+            background: #f9d5bb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .tutor-eyes {
+            position: absolute;
+            top: 70px;
+            display: flex;
+            gap: 40px;
+        }
+        
+        .eye {
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border-radius: 50%;
+            position: relative;
+            animation: blink 5s infinite;
+        }
+        
+        .eye::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+        }
+        
+        .tutor-mouth {
+            position: absolute;
+            bottom: 50px;
+            width: 80px;
+            height: 40px;
+            background: #e75480;
+            border-radius: 0 0 40px 40px;
+            transition: all 0.3s ease;
+        }
+        
+        .speaking .tutor-mouth {
+            animation: speak 0.5s infinite alternate;
+        }
+        
+        .tutor-name {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: 600;
+            color: #4e54c8;
+        }
+        
+        .tutor-title {
+            color: #6c757d;
+            font-size: 18px;
+        }
+        
+        .chat-section {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #4e54c8;
+            color: white;
+            padding: 15px 20px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .chat-display {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 15px;
+            border-radius: 18px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background: #4e54c8;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .ai-message {
+            align-self: flex-start;
+            background: #e9ecef;
+            color: #333;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .correction {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin-top: 5px;
+            border-radius: 0 8px 8px 8px;
+            font-size: 14px;
+        }
+        
+        .input-area {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            gap: 10px;
+        }
+        
+        #user-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        #user-input:focus {
+            outline: none;
+            border-color: #4e54c8;
+        }
+        
+        .btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .voice-btn {
+            background: #4e54c8;
+            color: white;
+        }
+        
+        .voice-btn.listening {
+            animation: pulse 1.5s infinite;
+        }
+        
+        .send-btn {
+            background: #28a745;
+            color: white;
+        }
+        
+        .feedback-section {
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+        
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .feedback-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4e54c8;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4e54c8;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .feedback-content {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 100px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .tip {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            font-size: 14px;
+        }
+        
+        .highlight {
+            background: #ffecb3;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes blink {
+            0%, 45%, 55%, 100% { height: 30px; }
+            50% { height: 5px; }
+        }
+        
+        @keyframes speak {
+            0% { height: 10px; }
+            100% { height: 5px; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(78, 84, 200, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(78, 84, 200, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(78, 84, 200, 0); }
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .tutor-section {
+                max-height: 300px;
+            }
+        }
+    </style>
